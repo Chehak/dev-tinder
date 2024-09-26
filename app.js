@@ -6,23 +6,20 @@ app.use("/admin", authAdmin, (req, res) => {
   res.send("hello from admin");
 });
 
-app.use("/user", (req, res, next) => {
-  next();
-  // res.send("hello from user");
-});
-app.use("/user/profile", (req, res, next) => {
-  next();
-  // res.send("hello from user profile");
-});
-app.use("/user/profile/2", (req, res) => {
-  res.send("hello from user profile 2");
+app.use("/user/login", (req, res) => {
+  res.send("User login api");
 });
 
-app.use("/admin/getUserData", (req, res) => {
-  res.send("Get all data ");
-});
-app.use("/admin/deleteUsers", (req, res) => {
-  res.send("user Deleted ");
+app.use("/user", userAuth, (req, res, next) => {
+  res.send("hello from user api");
 });
 
 app.listen(3000);
+
+// We create middlewares because we can do exceptional of things , we can handle so many corner cases with it
+//We can make our code look good and cleaner , so suppose if i had to check for authorization for each route handler ,
+//then obviously we can't write duplicate code everywhere instead we will create middleware for it and use it whereever we want
+//We can customized lots of things using middlewares
+//if suppose i had created multiple route for login and i dont want to authenticate my user/login route then what i can do
+// is to just add the userAuth to the /user route and make the /user/login to the top so that it dont have to
+//go through the user route simple

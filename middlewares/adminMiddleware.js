@@ -9,7 +9,7 @@ const authAdmin = (req, res, next) => {
   }
 };
 const userAuth = (req, res, next) => {
-  console.log("Auth is getting checked");
+  console.log("user auth is getting checked");
 
   const token = "xyz";
   if (token == "xyz") {

@@ -36,3 +36,12 @@ Starts from here :
  Write a dummy auth middleware for admin
  Write a dummy auth middleware for all the routes, expect /user/login
  Error handling using app.use("/",(err,req,res,next)=>{})
+
+
+ Install mongoose 
+ Connect mongodb atlas with cluster 
+ Make a connection with database using mongoose after listening to port 7777
+ Create a userSchema & user Modal
+ Create POST/ signup api  to add data to database
+ Push some documents using API calls from postman 
+ Error handling using try , catch

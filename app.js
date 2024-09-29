@@ -1,46 +1,38 @@
 const express = require("express");
 const app = express();
-const { authAdmin, userAuth } = require("./middlewares/adminMiddleware");
+const User = require("./schemas/UserSchema");
+const { mongoose } = require("mongoose");
+const connectDB = require("./config/database");
 
-app.use("/admin", authAdmin, (req, res) => {
-  res.send("hello from admin");
-});
-
-app.use("/user/login", (req, res) => {
-  res.send("User login api");
-});
-
-// error is not there on first then it will not run
-
-// app.use("/", (err, req, res, next) => {
-//   if (err) {
-//     res.status(500).send("Something went wrong");
-//   }
-// });
-
-//another one is we can use try catch so that, is is the best practice of handling errors , generally try catch is used
-//errors are handled within the route
-app.use("/user", (req, res, next) => {
-  // throw new Error("jjhjhjhjj");
-  // res.send("hello from user api");
+app.post("/signup", async (req, res) => {
   try {
-    throw new Error("jjhjhjhjj");
-    res.send("hello from user api");
+    //Creating a nee instance of the user modal and passed data into it ,
+    //  when i saved then the new document is added to the databse
+    const user = new User({
+      firstName: "Chehak",
+      lastName: "Gupta",
+      gender: "female",
+      email: "gchehak18@gmail.com",
+      age: -24,
+      password: "123456",
+    });
+    await user.save();
+    res.send("User added");
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
-//one method of error handling is that we can add a wildcard route so that if any of the route has some error
-//then this route will call and handles error efficiently
-
-app.use("/", (err, req, res, next) => {
-  if (err) {
-    res.status(500).send("Something went wrong");
-  }
-});
-
-app.listen(3000);
+connectDB()
+  .then(() => {
+    console.log("Database connected successfully");
+    app.listen(7777, () => {
+      console.log("Server is listening to port 7777");
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // We create middlewares because we can do exceptional of things , we can handle so many corner cases with it
 //We can make our code look good and cleaner , so suppose if i had to check for authorization for each route handler ,

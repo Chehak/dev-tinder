@@ -1,25 +1,60 @@
 const express = require("express");
 const app = express();
-const User = require("./schemas/UserSchema");
+const User = require("./modals/user");
 const { mongoose } = require("mongoose");
 const connectDB = require("./config/database");
+
+app.use(express.json());
 
 app.post("/signup", async (req, res) => {
   try {
     //Creating a nee instance of the user modal and passed data into it ,
     //  when i saved then the new document is added to the databse
-    const user = new User({
-      firstName: "Chehak",
-      lastName: "Gupta",
-      gender: "female",
-      email: "gchehak18@gmail.com",
-      age: -24,
-      password: "123456",
-    });
+    const user = new User(req.body);
     await user.save();
     res.send("User added");
   } catch (err) {
     res.status(500).send(err.message);
+  }
+});
+
+app.get("/user", async (req, res) => {
+  const emailId = req.body.email;
+  try {
+    const user = await User.find({ email: emailId });
+    if (!user) res.status(400).send("User not found");
+    res.send(user);
+  } catch (err) {
+    res.status(500).send("Internal Server error");
+  }
+});
+
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (err) {
+    res.status(500).send("Internal Server error");
+  }
+});
+
+app.get("/userById/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findById(id);
+    res.send(user);
+  } catch (err) {
+    res.status(500).send("Internal Server error");
+  }
+});
+
+app.patch("/user/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findByIdAndUpdate(id, req.body);
+    res.send("Updated Successfully");
+  } catch (err) {
+    res.status(500).send("Internal server error");
   }
 });
 

@@ -30,11 +30,6 @@ const UserSchema = new mongoose.Schema(
         if (!validator.isStrongPassword(value)) {
           throw new Error("Please enter a strong password");
         }
-        // validate(value) {
-        //   if (!["male", "female", "others"].includes(value)) {
-        //     throw new Error("Gender data is not valid");
-        //   }
-        // },
       },
     },
     age: {
@@ -47,9 +42,37 @@ const UserSchema = new mongoose.Schema(
         values: ["male", "female", "other"],
         message: "is not supported",
       },
+      // validate(value) {
+      //   if (!["male", "female", "others"].includes(value)) {
+      //     throw new Error("Gender data is not valid");
+      //   }
+      // },
     },
     skills: {
       type: [String],
+      required: true,
+      validate: [
+        {
+          validator: function (arr) {
+            // Check if the array length is greater than 6
+            return arr.length <= 6;
+          },
+          message: "Length of the skills array must not be greater than 6.",
+        },
+        {
+          validator: function (arr) {
+            // Check if every skill in the array has a length less than 15
+            return arr.every((skill) => skill.length < 15);
+          },
+          message: "Each skill must be less than 15 characters.",
+        },
+        {
+          validator: function (arr) {
+            return arr.length == new Set(arr).size;
+          },
+          message: "Skills must not contain any duplicates ",
+        },
+      ],
     },
     photoUrl: {
       type: String,
@@ -63,6 +86,12 @@ const UserSchema = new mongoose.Schema(
     about: {
       type: String,
       default: "This is a default about",
+      validate: {
+        validator: function (str) {
+          return str.length <= 100;
+        },
+        message: "Length must not be greater than 100",
+      },
     },
   },
   { timestamps: true }

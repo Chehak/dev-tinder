@@ -1,25 +1,30 @@
-const authAdmin = (req, res, next) => {
-  console.log("Auth is getting checked");
+const User = require("../modals/user");
+const jwt = require('jsonwebtoken');
 
-  const token = "xyz";
-  if (token == "xyz") {
-    next();
-  } else {
-    res.status(401).send("Admin not authorized");
-  }
-};
-const userAuth = (req, res, next) => {
-  console.log("user auth is getting checked");
 
-  const token = "xyz";
-  if (token == "xyz") {
-    next();
-  } else {
-    res.status(401).send("Admin not authorized");
+const userAuth = async (req, res, next) => {
+  try {
+    const { token } = req.cookies;
+    if (!token) throw new Error("Token is not valid !!");
+
+    const decodedMessage = await jwt.verify(token, "I@AM##POSSIBLE$!1999");
+    const { _id } = decodedMessage;
+
+    const user = await User.findById(_id);
+    if (!user) {
+      throw new Error("No user found")
+    }
+    else {
+      req.user = user
+      next()
+    }
+
+  } catch (err) {
+    res.status(500).send("Internal Server error" + err.message)
   }
+
 };
 
 module.exports = {
-  authAdmin,
   userAuth,
 };

@@ -1,47 +1,125 @@
-Create a repository
-node_modules , package.json v/s package_lock.json 
-.bin folder inside node_modules 
-What are dependencies 
-what is the meaning of -g while npm install 
-Difference between caret ^ and tilde ~
-Insatll Express 
-Create a server in express 
-Listen to port 3000 
-Write request handler for '/hello' '/test'
+ - Create a repository  - Done
+ - Initialize the repository - Done
+ - node_modules, package.json, package-lock.json - Done
+ - Install express - Done
+ - Create a server - Done
+ - Listen to port 7777 - Done
+ - Write request handlers for /test , /hello - Done
+ - Install nodemon and update scripts inside package.json - Done
+ - What are dependencies - Done
+ - What is the use of "-g" while npm install  - Done
+ - Difference between caret and tilde  ( ^ vs ~ ) - Done
 
+ - initialize git - Done
+ - .gitignore - Done
+ - Create a remote repo on github - Done
+ - Push all code to remote origin - Done
+ - Play with routes and route extensions ex. /hello, / , hello/2, /xyz - Done
+ - Order of the routes matter a lot -YUP TRUE !!
+ - Install Postman app and make a workspace/collection > test API call - Done
+ - Write logic to handle GET, POST, PATCH, DELETE API Calls and test them on Postman - Done
+ - Explore routing and use of ?, + , (), * in the routes - Done
+ - Use of regex in routes /a/ ,  /.*fly$/ - Done
+ - Reading the query params in the routes - Done
+ - Reading the dynamic routes - Done
 
-Order of writing the route matters a lot !! 
-Install postman 
-Play with it 
-Play with get post delete patch put api's 
+ - Multiple Route Handlers - Play with the code - Done
+ - next() - Done
+ - next function and errors along with res.send() - Done
+ - app.use("/route", rH, [rH2, rH3], rH4, rh5); - Done
+ - What is a Middleware? Why do we need it? - Done
+ - How express JS basically handles requests behind the scenes - Done
+ - Difference app.use and app.all - PENDING 
+ - Write a dummy auth middleware for admin - Done
+ - Write a dummy auth middleware for all user routes, except /user/login - Done
+ - Error Handling using app.use("/", (err, req, res, next) = {}); - Done
 
-Routes can also be written with patterns like a?bc , ab+c ,ab*c , a(bc)+d  
- regex link /a/, /.*fly$/  , you can create your own regex also
- Read the query params in the routes and reading the dynamic routes
+ - Create a free cluster on MongoDB official website (Mongo Atlas)
+ - Install mongoose library
+ - Connect your application to the Database "Connection-url"/devTinder
+ - Call the connectDB function and connect to database before starting application on 7777
+ - Create a userSchema & user Model
+ - Create POST /sigup API to add data to database
+ - Push some documents using API calls from postman
+ - Error Handling using try , catch
 
+ - JS object vs JSON (difference)
+ - Add the express.json middleware to your app
+ - Make your signup API dynamic to recive data from the end user
+ - User.findOne with duplucate email ids, which object returned
+ - API- Get user by email
+ - API - Feed API - GET /feed - get all the users from the database
+ - API - Get user by ID
+ - Create a delete user API
+ - Difference between PATCH and PUT
+ - API - Update a user
+ - Explore the Mongoose Documention for Model methods
+ - What are options in a Model.findOneAndUpdate method, explore more about it
+ - API - Update the user with email ID
 
- Route Handlers -play with the code 
+ - Explore schematype options from the documention
+ - add required, unique, lowercase, min, minLength, trim
+ - Add default
+ - Create a custom validate function for gender
+ - Improve the DB schema - PUT all appropiate validations on each field in Schema
+ - Add timestamps to the userSchema
+ - Add API level validation on Patch request & Signup post api
+ - DATA Sanitizing - Add API validation for each field
+ - Install validator
+ - Explore validator library funcation and Use vlidator funcs for password, email, photoURL
+ - NEVER TRUST req.body
 
-Starts from here : 
- next()
- next() function and errors along with res.send()
+ - Validate data in Signup API
+ - Install bcrypt package
+ - Create PasswordHash using bcrypt.hash & save the user is excrupted password
+ - Create login API
+ - Compare passwords and throw errors if email or password is invalid
 
-    app.use('/route',rh1,rh2,rh3) 
-    app.use('/route',[rh1,rh2],rh3) 
-    app.use('/route',rh1,rh2,[rh3]) 
-    All the structures will work the same way 
- What is middleware ? why do we use it?
- How express js basically handles requests behind the scenes
- Difference app.use and app.all
- Write a dummy auth middleware for admin
- Write a dummy auth middleware for all the routes, expect /user/login
- Error handling using app.use("/",(err,req,res,next)=>{})
+ - install cookie-parser
+ - just send a dummy cookie to user
+ - create GET /profile APi and check if you get the cookie back
+ - install jsonwebtoken 
+ - IN login API, after email and password validation, create e JWT token and send it to user in cookies
+ - read the cookies inside your profile API and find the logged in user
+ - userAuth Middleware
+ - Add the userAuth middle ware in profile API and a new sendConnectionRequest API
+ - Set the expiry of JWT token and cookies to 7 days
+ - Create userSchema method to getJWT() 
+ - Create UserSchema method to comparepassword(passwordInputByUser)
 
+ - Explore tinder APIs
+ - Create a list all API you can think of in Dev Tinder
+ - Group multiple routes under respective routers
+ - Read documentation for express.Router
+ - Create routes folder for managing auth,profile, request routers
 
- Install mongoose 
- Connect mongodb atlas with cluster 
- Make a connection with database using mongoose after listening to port 7777
- Create a userSchema & user Modal
- Create POST/ signup api  to add data to database
- Push some documents using API calls from postman 
- Error handling using try , catch
+ - create authRouter, profileRouter, requestRouter
+ - Import these routers in app.js
+ - Create POST /logout API
+ - Create PATCH /profile/edit
+ - Create PATCH /profile/password API => forgot password API
+ - Make you validate all data in every POST, PATCH apis
+
+logout + edit profile API
+
+Create Connnection Request Schema
+ - Send Connection Request API
+ - Proper validation of Data
+ - Think about ALL corner cases
+ - $or query $and query in mongoose - https://www.mongodb.com/docs/manual/reference/operator/query-logical/
+ - schema.pre("save") function
+ - Read more about indexes in MongoDB
+ - Why do we need index in DB?
+ - What is the advantages and disadvantage of creating?
+ - Read this arcticle about compond indexes - https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
+ - ALWAYS THINK ABOUT CORNER CASES 
+ - Write code with proper validations for POST /request/review/:status/:requestId
+ 
+ - Thought process - POST vs GET 
+ - Read about ref and populate https://mongoosejs.com/docs/populate.html
+ - Create GET /user/requests/received with all the checks
+ - Create  GET /user/connections
+
+ - Logic for GET /feed API
+ - Explore the $nin (not include in array) , $and, $ne (not equals to) and other query operatorators
+ - Paginatio

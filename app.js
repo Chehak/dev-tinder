@@ -1,62 +1,29 @@
 const express = require("express");
 const app = express();
-const User = require("./modals/user");
-const { mongoose } = require("mongoose");
 const connectDB = require("./config/database");
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+
+app.use(
+  cors({
+    origin:"http://localhost:5173",
+    credentials:true
+  })
+)
 
 app.use(express.json());
+app.use(cookieParser())
 
-app.post("/signup", async (req, res) => {
-  try {
-    //Creating a nee instance of the user modal and passed data into it ,
-    //  when i saved then the new document is added to the databse
-    const user = new User(req.body);
-    await user.save();
-    res.send("User added");
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
+const authRouter = require('./routes/auth');
+const profileRouter = require('./routes/profile');
+const requestRoute = require('./routes/request');
+const userRoute = require('./routes/user')
 
-app.get("/user", async (req, res) => {
-  const emailId = req.body.email;
-  try {
-    const user = await User.find({ email: emailId });
-    if (!user) res.status(400).send("User not found");
-    res.send(user);
-  } catch (err) {
-    res.status(500).send("Internal Server error");
-  }
-});
+app.use('/', authRouter);
+app.use('/', profileRouter);
+app.use('/', requestRoute);
+app.use('/', userRoute);
 
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.send(users);
-  } catch (err) {
-    res.status(500).send("Internal Server error");
-  }
-});
-
-app.get("/userById/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    const user = await User.findById(id);
-    res.send(user);
-  } catch (err) {
-    res.status(500).send("Internal Server error");
-  }
-});
-
-app.patch("/user/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    const user = await User.findByIdAndUpdate(id, req.body);
-    res.send("Updated Successfully");
-  } catch (err) {
-    res.status(500).send("Internal server error");
-  }
-});
 
 connectDB()
   .then(() => {

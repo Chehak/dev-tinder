@@ -122,4 +122,4 @@ Create Connnection Request Schema
 
  - Logic for GET /feed API
  - Explore the $nin (not include in array) , $and, $ne (not equals to) and other query operatorators
- - Paginatio
+ - Pagination
